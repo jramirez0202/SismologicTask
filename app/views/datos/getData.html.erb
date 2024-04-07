@@ -1,0 +1,44 @@
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+  <table
+    class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+  >
+    <thead class="text-xs text-gray-700 uppercase dark:text-gray-400">
+      <tr class="px-6 py-3 bg-gray-50 dark:bg-gray-800 text-center">
+        <th scope="col">ID</th>
+        <th scope="col" class="px-6 py-3">Magnitude</th>
+        <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">Place</th>
+        <th scope="col" class="px-6 py-3">Time</th>
+        <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">Tsunami</th>
+        <th scope="col" class="px-6 py-3">MagType</th>
+        <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">Title</th>
+        <th scope="col" class="px-6 py-3">Longitude</th>
+        <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">Latitude</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @datos.each do |dato| %>
+      <tr class="border-b border-gray-200 dark:border-gray-700 text-center">
+        <td class="px-6 py-4"><%= dato['id'] %></td>
+        <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">
+          <%= dato['properties']['mag'] %>
+        </td>
+        <td class="px-6 py-4"><%= dato['properties']['place'] %></td>
+        <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">
+          <%= Time.at(dato['properties']['time'] / 1000) %>
+        </td>
+        <td class="px-6 py-4"><%= dato['properties']['tsunami'] %></td>
+        <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">
+          <%= dato['properties']['magType'] %>
+        </td>
+        <td class="px-6 py-4"><%= dato['properties']['title'] %></td>
+        <td class="px-6 py-4 bg-gray-50 dark:bg-gray-800">
+          <%= dato['geometry']['coordinates'][0] %>
+        </td>
+        <td class="px-6 py-4 whitespace-nowrap">
+          <%= dato['geometry']['coordinates'][1] %>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

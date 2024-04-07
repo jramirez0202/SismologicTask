@@ -1,2 +1,2 @@
-import Welcome from "./components/FirstComponent";
-import Counter from "./components/Counter";
+import FirstComponent from "./components/FirstComponent";
+
