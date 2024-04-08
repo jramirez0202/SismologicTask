@@ -5,22 +5,20 @@ namespace :data do
   task sync: :environment do
     ActiveRecord::Base.transaction do
       begin
-        # Calcula los últimos 30 días
-        end_date = Date.today
-        start_date = end_date - 30
-
-        start_date_str = start_date.strftime("%Y-%m-%d")
-        end_date_str = end_date.strftime("%Y-%m-%d")
-
-        url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson?starttime=#{start_date_str}&endtime=#{end_date_str}"
-
+        # Obtener todos los datos
+        url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson"
         response = HTTParty.get(url)
         @datos = JSON.parse(response.body)['features']
 
-        puts "Data obtained for the last 30 days: Success"
+        # Filtrar solo los últimos 30 días
+        last_30_days_data = @datos.select do |data|
+          time = Time.at(data['properties']['time'] / 1000)
+          time >= (Date.today - 30)
+        end
+        puts "Data Past 30 days obtained: Success"
 
-        # Mapea los datos para la inserción masiva
-        earthquake_data = @datos.map do |data|
+        #Llame custom_id a el ID que entrega la data 
+        earthquake_data = last_30_days_data.map do |data|
           {
             custom_id: data['id'],
             url: data['properties']['url'],
@@ -36,26 +34,42 @@ namespace :data do
         end
 
         valid_earthquake_data = earthquake_data.reject do |earthquake|
-          valid = earthquake.present? &&
+          validateFields = earthquake.present? &&
             earthquake[:title].present? &&
             earthquake[:url].present? &&
             earthquake[:place].present? &&
             earthquake[:mag_type].present? &&
+            earthquake[:magnitude].present? &&
             earthquake['geometry'].present? &&
             earthquake['geometry']['coordinates'].present?
-          
-          # puts "Invalid: #{earthquake}" unless valid
         
-          valid
+            unless validateFields
+              missing_fields = earthquake.select { |key, value| value.nil? }
+              if missing_fields.any?
+                puts "Error: Missing required fields for earthquake data: #{missing_fields.keys}"
+              end
+            end
+        
+            validateRanges = (
+              earthquake[:magnitude].between?(-1.0, 10.0) &&
+              earthquake[:latitude].between?(-90.0, 90.0) &&
+              earthquake[:longitude].between?(-180.0, 180.0)
+            )
+        
+          #Esta validacion mostrara los registros en consola de todos los rangos que no cumplen y no persistiran.
+          unless validateRanges
+            puts "Error: Out of range values: #{earthquake}"
+          end
+        
+          validateFields && validateRanges
+
         end
         
-        
-
         Earthquake.create!(valid_earthquake_data)
 
         puts "Save Sismologic Data: Success"
       rescue StandardError => e
-        puts "Error fetching data from the API: #{e.message}"
+        puts "Error: invalid ranges, check this fields: #{e.message}"
         raise ActiveRecord::Rollback
       end
     end

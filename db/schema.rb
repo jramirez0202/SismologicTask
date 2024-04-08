@@ -27,6 +27,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_07_030931) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "custom_id"
+    t.index ["custom_id"], name: "index_earthquakes_on_custom_id", unique: true
   end
 
 end

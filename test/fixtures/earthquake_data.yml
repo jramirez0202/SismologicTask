@@ -4,8 +4,13 @@
 # model remove the "{}" from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: {}
-# column: value
-#
-two: {}
-# column: value
+one:
+  date: <%= 29.days.ago.to_date %>  # Ejemplo de fecha dentro de los últimos 30 días
+  magnitude: 5.8                    
+  location: "Pacific Ocean"          
+
+two:
+  date: <%= 35.days.ago.to_date %>  # Ejemplo de fecha más antigua
+  magnitude: 4.2                    
+  location: "North America"          
+
