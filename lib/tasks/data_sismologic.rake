@@ -1,14 +1,12 @@
-require 'httparty'
+require_relative '../get_data_sismologic'
 
 namespace :data do
   desc "get data from https://earthquake.usgs.gov"
   task sync: :environment do
     ActiveRecord::Base.transaction do
       begin
-        # Obtener todos los datos
-        url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson"
-        response = HTTParty.get(url)
-        @datos = JSON.parse(response.body)['features']
+        # Obtener todos los datos desde get_data_sismologic.rb
+        @datos = GetDataSismologic.fetch_data
 
         # Filtrar solo los últimos 30 días
         last_30_days_data = @datos.select do |data|
@@ -17,7 +15,7 @@ namespace :data do
         end
         puts "Data Past 30 days obtained: Success"
 
-        #Llame custom_id a el ID que entrega la data 
+        #Llame custom_id a el ID que entrega la data.
         earthquake_data = last_30_days_data.map do |data|
           {
             custom_id: data['id'],

@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
-  get '/getData', to: 'datos#getData'
+  namespace :api do
+    namespace :v1 do
+      resources :earthquakes, only: [:index]
+    end
+  end
+  # get '/getData', to: 'datos#getData'
   root 'home#index'
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Defines the root path route ("/")
-  # root "articles#index"
 end
+

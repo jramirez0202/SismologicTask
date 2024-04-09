@@ -18,5 +18,9 @@ module SismologicTask
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+    
+    #Esto asegurará que los archivos en el directorio lib se carguen automáticamente cuando se inicie la aplicación.
+    config.autoload_paths += %W(#{config.root}/lib)
+
   end
 end

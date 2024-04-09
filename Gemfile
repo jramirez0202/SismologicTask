@@ -73,6 +73,10 @@ end
 
 # tools frontend
 gem 'cssbundling-rails'
-# gem 'net-http'
-gem 'httparty'
 gem "tailwindcss-rails", "~> 2.3"
+
+
+# tools backend
+# gem 'axios_rails', '~> 0.7.0'
+gem 'httparty'
+
