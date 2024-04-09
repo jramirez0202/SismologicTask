@@ -2,9 +2,6 @@
 // import "@hotwired/turbo-rails"
 // import "./controllers"
 
-// @tailwind base;
-// @tailwind components;
-// @tailwind utilities;
 
 import './react/src/index.js'
 
