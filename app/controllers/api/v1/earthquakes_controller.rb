@@ -2,6 +2,15 @@ class Api::V1::EarthquakesController < ApplicationController
   def index
     @earthquakes = Earthquake.all
 
+    # Filtrar por mag_type si se proporciona en los parámetros de la solicitud
+    if params[:filters] && params[:filters][:mag_type]
+      mag_types_to_filter = params[:filters][:mag_type].split(',')
+      @earthquakes = Earthquake.by_mag_type(mag_types_to_filter)
+    end
+
+    # Paginar los resultados con Kaminari
+    @earthquakes = @earthquakes.page(params[:page]).per(per_page_limit)
+
     # Mapear los datos de terremotos al formato requerido
     data = @earthquakes.map do |earthquake|
       {
@@ -30,12 +39,19 @@ class Api::V1::EarthquakesController < ApplicationController
     response_json = {
       data: data,
       pagination: {
-        current_page: 1, # Puedes ajustar según necesites
-        total: @earthquakes.count,
-        per_page: @earthquakes.count # Puedes ajustar según necesites
+        current_page: @earthquakes.current_page,
+        total: @earthquakes.total_count,
+        per_page: @earthquakes.limit_value
       }
     }
 
     render json: response_json
+  end
+
+  private
+
+  # Método privado para validar que per_page sea menor o igual a 100
+  def per_page_limit
+    params[:per_page].to_i <= 100 ? params[:per_page] : 25
   end
 end

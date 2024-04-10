@@ -26,6 +26,7 @@ const EarthquakeTable = () => {
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
       <h2>Tabla de Terremotos</h2>
+      <a href="http://localhost:3000/api/v1/earthquakes">endPoint</a>
       <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead className="text-xs text-gray-700 uppercase dark:text-gray-400">
           <tr className="px-6 py-3 bg-gray-50 dark:bg-gray-800 text-center">
@@ -36,8 +37,8 @@ const EarthquakeTable = () => {
             <th scope="col" className="px-6 py-3 bg-gray-50 dark:bg-gray-800">Tsunami</th>
             <th scope="col" className="px-6 py-3">Mag Type</th>
             <th scope="col" className="px-6 py-3 bg-gray-50 dark:bg-gray-800">Title</th>
-            <th scope="col" className="px-6 py-3">Longitude</th>
-            <th scope="col" className="px-6 py-3 bg-gray-50 dark:bg-gray-800">Latitude</th>
+            <th scope="col" className="px-6 py-3">Longitude/Latitude</th>
+            <th scope="col" className="px-6 py-3 bg-gray-50 dark:bg-gray-800">URL</th>
 
           </tr>
         </thead>
@@ -52,7 +53,7 @@ const EarthquakeTable = () => {
                 <td className="px-6 py-4">{attributes.tsunami ? 'Yes' : 'No'}</td>
                 <td className="px-6 py-4 bg-gray-50 dark:bg-gray-800">{attributes.mag_type}</td>
                 <td className="px-6 py-4">{attributes.title}</td>
-                <td className="px-6 py-4 bg-gray-50 dark:bg-gray-800">{attributes.coordinates ? `Longitude: ${attributes.coordinates.longitude}, Latitude: ${attributes.coordinates.latitude}` : 'N/A'}</td>
+                <td className="px-6 py-4 bg-gray-50 dark:bg-gray-800">{attributes.coordinates ? `  Long: ${attributes.coordinates.longitude}, Lat: ${attributes.coordinates.latitude}` : 'N/A'}</td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <a href={links.external_url} target="_blank" rel="noopener noreferrer">Ver la URL</a>
                 </td>
