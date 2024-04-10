@@ -80,3 +80,5 @@ gem "tailwindcss-rails", "~> 2.3"
 # gem 'axios_rails', '~> 0.7.0'
 gem 'httparty'
 
+gem 'webpacker', '~> 5.x'
+
