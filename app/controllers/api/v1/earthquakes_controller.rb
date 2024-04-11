@@ -40,7 +40,7 @@ class Api::V1::EarthquakesController < ApplicationController
       data: data,
       pagination: {
         current_page: @earthquakes.current_page,
-        total: @earthquakes.total_count,
+        total_page: @earthquakes.total_count,
         per_page: @earthquakes.limit_value
       }
     }
@@ -50,8 +50,8 @@ class Api::V1::EarthquakesController < ApplicationController
 
   private
 
-  # Método privado para validar que per_page sea menor o igual a 100
+  # Método privado para validar que per_page sea menor o igual a 1000
   def per_page_limit
-    params[:per_page].to_i <= 100 ? params[:per_page] : 25
+    params[:per_page].to_i <= 1000 ? params[:per_page] : 1000
   end
 end
