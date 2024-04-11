@@ -6,7 +6,6 @@ import EarthquakeTable from "./EarthquakeTable";
 const MainComponent = () => {
   return (
     <div>
-      <h1 className="text-3xl font-bold underline">Hello worlds!</h1>
       <EarthquakeTable/>
     </div>
   );
