@@ -6,7 +6,6 @@ import EarthquakeTable from "./components/EarthquakeTable/EarthquakeTable";
 const MainComponent = () => {
   return (
     <div className="container">
-      <h1>esto es una prueba</h1>
       <EarthquakeTable/>
     </div>
   );

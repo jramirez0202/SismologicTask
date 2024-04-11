@@ -4,7 +4,6 @@ const fetchUsgsData = async (currentPage, filter ) => {
   try {
     let url 
     if (filter.length) {
-      console.log('hjhh', filter)
       url = `http://localhost:3000/api/v1/earthquakes?&page=${currentPage}&filters[mag_type]=${filter.join(', ')}`
     } else {
       url = `http://localhost:3000/api/v1/earthquakes?&page=${currentPage}`
