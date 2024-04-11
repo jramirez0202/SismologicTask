@@ -17,7 +17,7 @@ class Api::V1::EarthquakesController < ApplicationController
         id: earthquake.id,
         type: "feature",
         attributes: {
-          custom_id_id: earthquake.custom_id.to_s,
+          custom_id: earthquake.custom_id.to_s,
           magnitude: earthquake.magnitude,
           place: earthquake.place,
           time: earthquake.time.strftime("%Y-%m-%d %H:%M:%S"),
