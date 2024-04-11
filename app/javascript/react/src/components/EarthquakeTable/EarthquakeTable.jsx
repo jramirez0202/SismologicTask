@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import AxiosData from '../../../api/AxiosData';
-import Pagination from '../components/Pagination/Pagination.js';
+import AxiosData from '../../../../api/AxiosData.js';
+import Pagination from '../../components/Pagination/Pagination.js';
 
 
 const EarthquakeTable = () => {
@@ -73,9 +73,9 @@ const EarthquakeTable = () => {
       <div className="max-w-md mx-auto">   
         <div className="relative">
             <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                {/* <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-                </svg> */}
+                <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                </svg>
             </div>
             <input 
             type="search" 
@@ -86,25 +86,28 @@ const EarthquakeTable = () => {
             placeholder="Search title" required />
         </div>
       </div>
-      <div>
-        {
-          filters?.map((filter) => (
-            <div key={filter}>
-              <input 
-              type="checkbox"
-              onChange={() => onSelectFilter(filter)}
-            />  
-              <div>{filter}</div> 
-            </div>
-          ))
-        } 
+      
+    <div className="flex flex-wrap justify-center">
+      {filters?.map((filter) => (
+      <div key={filter} className="ml-5 mb-2 mt-2">
+        <label className="text-black">
+          <input
+            className="dark:border-white-400/20 dark:scale-100 transition-all duration-500 ease-in-out dark:hover:scale-110 dark:checked:scale-100 w-5 h-5"
+            type="checkbox"
+            onChange={() => onSelectFilter(filter)}
+          />
+          <span className="ml-2">{filter}</span>
+        </label>
       </div>
+        ))}
+    </div>
+
+
       <Pagination 
         dataPage={dataPerPage}
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
         totalPage={total_page || 1}
-
       />
       {loading && <div>Loading </div>}           
       <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -119,7 +122,6 @@ const EarthquakeTable = () => {
             <th scope="col" className="px-6 py-3 bg-gray-50 dark:bg-gray-800">Title</th>
             <th scope="col" className="px-6 py-3">Longitude/Latitude</th>
             <th scope="col" className="px-6 py-3 bg-gray-50 dark:bg-gray-800">URL</th>
-
           </tr>
         </thead>
         <tbody>

@@ -24,16 +24,30 @@ const  Pagination = ({dataPage, currentPage, setCurrentPage, totalPage}) => {
 
   return (
     <div className="pagination__container">
-        <div >
-          <button className="btn__pagination" disabled={currentPage === 1} onClick={() => onPreviousPage()}>anterior</button>
-        </div>
+      <div >
+        <button
+          type="button"
+          className={`px-5 py-3 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''}`}
+          disabled={currentPage === 1}
+          onClick={() => onPreviousPage()}
+          >
+          Prev
+        </button>
+      </div>
           <div className="containerNumber__page">
             {pageNumber.map(page => (
               <div className={`number__page ${page === currentPage && 'current__page'}`} onClick={() => onSpecificPage(page)}  key={page}>{page}</div>
             ))}
           </div>
-        <div >
-          <button className="btn__pagination" disabled={currentPage >= pageNumber.length} onClick={() => onNextPage()}>siguiente</button>
+        <div>
+          <button
+            className={`px-5 py-3 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 ${currentPage >= pageNumber.length ? 'opacity-50 cursor-not-allowed' : ''}`}
+            type="button"
+            disabled={currentPage >= pageNumber.length}
+            onClick={() => onNextPage()}
+          >
+          Next
+          </button>
         </div>
     </div>
   )

@@ -1,3 +1,4 @@
-import MainComponent from "./components/MainComponent";
-
-
+import MainComponent from "./MainComponent";
+{/* <div class="container">
+    <div id="mainComponents"></div>
+</div> */}
