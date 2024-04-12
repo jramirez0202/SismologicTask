@@ -11,8 +11,8 @@ class DataSismologicTest < ActiveSupport::TestCase
     Rake::Task.define_task(:environment)
   end
 
-  test 'should fetch earthquake data from the last 30 days and save to database' do
-    assert_difference 'Earthquake.count', 1 do
+  test 'should fetch feature data from the last 30 days and save to database' do
+    assert_difference 'Feature.count', 1 do
       assert_output(/Data obtained for the last 30 days: Success/) do
         @rake['data:sync'].invoke
       end

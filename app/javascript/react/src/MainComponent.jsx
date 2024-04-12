@@ -1,12 +1,12 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom/client";
 import { createRoot } from "react-dom/client";
-import EarthquakeTable from "./components/EarthquakeTable/EarthquakeTable";
+import FeatureTable from "./components/FeatureTable/FeatureTable";
 
 const MainComponent = () => {
   return (
     <div className="container">
-      <EarthquakeTable/>
+      <FeatureTable/>
     </div>
   );
 };

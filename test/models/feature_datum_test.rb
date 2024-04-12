@@ -1,6 +1,6 @@
 require "test_helper"
 
-class EarthquakeTest < ActiveSupport::TestCase
+class FeatureDatumTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
