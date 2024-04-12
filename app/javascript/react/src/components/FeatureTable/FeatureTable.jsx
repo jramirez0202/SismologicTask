@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import AxiosData from '../../../../api/AxiosData.js';
-import Pagination from '../../components/Pagination/Pagination.js';
+import Pagination from '../../components/Pagination/Pagination.jsx';
 
 
-const EarthquakeTable = () => {
-  const [earthquakes, setEarthquakes] = useState([]);
+const FeatureTable = () => {
+  const [features, setFeatures] = useState([]);
   const [loading, setLoading] = useState(true);
   const [setOnSearch, setSetOnSearch] = useState('');
   const [dataPerPage, setDataPerPage] = useState(25);
@@ -30,15 +30,15 @@ const EarthquakeTable = () => {
       return item?.attributes?.title?.toLowerCase().includes(setOnSearch?.toLowerCase())
     })
 
-    searchDataByTitle.length === 0 ? setEarthquakes(dataRef.current) : setEarthquakes(searchDataByTitle)
+    searchDataByTitle.length === 0 ? setFeatures(dataRef.current) : setFeatures(searchDataByTitle)
 
   }, [setOnSearch]);
 
   const fetchData = async () => {
-    const data = await AxiosData.fetchUsgsData(currentPage, filtersSelect);
+    const data = await AxiosData.fetchUsgsData(currentPage, filtersSelect,dataPerPage);
     if (data) {
       dataRef.current = data.data
-      setEarthquakes(data?.data);
+      setFeatures(data?.data);
       setTotalPage(data?.pagination?.total_page)
       setLoading(false);
     } else {
@@ -101,8 +101,6 @@ const EarthquakeTable = () => {
       </div>
         ))}
     </div>
-
-
       <Pagination 
         dataPage={dataPerPage}
         currentPage={currentPage}
@@ -125,10 +123,10 @@ const EarthquakeTable = () => {
           </tr>
         </thead>
         <tbody>
-          {earthquakes?.length > 0 ? (
-            earthquakes?.map(({ id, attributes, links }) => (
+          {features?.length > 0 ? (
+            features?.map(({ id, attributes, links }) => (
               <tr key={id} className="border-b border-gray-200 dark:border-gray-700 text-center">
-                <td className="px-6 py-4">{attributes.custom_id}</td>
+                <td className="px-6 py-4">{attributes.feature_id}</td>
                 <td className="px-6 py-4 bg-gray-50 dark:bg-gray-800">{attributes.magnitude}</td>
                 <td className="px-6 py-4">{attributes.place}</td>
                 <td className="px-6 py-4 bg-gray-50 dark:bg-gray-800">{attributes.time}</td>
@@ -152,5 +150,5 @@ const EarthquakeTable = () => {
   );
 };
 
-export default EarthquakeTable;
+export default FeatureTable;
 

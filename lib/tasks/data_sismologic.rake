@@ -13,12 +13,12 @@ namespace :data do
           time = Time.at(data['properties']['time'] / 1000)
           time >= (Date.today - 30)
         end
-        puts "Data Past 30 days obtained: Success"
+        puts "Past 30 days Data obtained: Success"
 
-        #Llame custom_id a el ID que entrega la data.
-        earthquake_data = last_30_days_data.map do |data|
+        #Llame feature_id a el ID que entrega la data.
+        feature_data = last_30_days_data.map do |data|
           {
-            custom_id: data['id'],
+            feature_id: data['id'],
             url: data['properties']['url'],
             magnitude: data['properties']['mag'],
             place: data['properties']['place'],
@@ -31,39 +31,39 @@ namespace :data do
           }
         end
 
-        valid_earthquake_data = earthquake_data.reject do |earthquake|
-          validateFields = earthquake.present? &&
-            earthquake[:title].present? &&
-            earthquake[:url].present? &&
-            earthquake[:place].present? &&
-            earthquake[:mag_type].present? &&
-            earthquake[:magnitude].present? &&
-            earthquake['geometry'].present? &&
-            earthquake['geometry']['coordinates'].present?
+        valid_feature_data = feature_data.reject do |feature|
+          validateFields = feature.present? &&
+            feature[:title].present? &&
+            feature[:url].present? &&
+            feature[:place].present? &&
+            feature[:mag_type].present? &&
+            feature[:magnitude].present? &&
+            feature['geometry'].present? &&
+            feature['geometry']['coordinates'].present?
         
             unless validateFields
-              missing_fields = earthquake.select { |key, value| value.nil? }
+              missing_fields = feature.select { |key, value| value.nil? }
               if missing_fields.any?
-                puts "Error: Missing required fields for earthquake data: #{missing_fields.keys}"
+                puts "Error: Missing required fields for feature data: #{missing_fields.keys}"
               end
             end
         
             validateRanges = (
-              earthquake[:magnitude].between?(-1.0, 10.0) &&
-              earthquake[:latitude].between?(-90.0, 90.0) &&
-              earthquake[:longitude].between?(-180.0, 180.0)
+              feature[:magnitude].between?(-1.0, 10.0) &&
+              feature[:latitude].between?(-90.0, 90.0) &&
+              feature[:longitude].between?(-180.0, 180.0)
             )
         
           #Esta validacion mostrara los registros en consola de todos los rangos que no cumplen y no persistiran.
           unless validateRanges
-            puts "Error: Out of range values: #{earthquake}"
+            puts "Error: Data out of range values: #{feature}"
           end
         
           validateFields && validateRanges
 
         end
         
-        Earthquake.create!(valid_earthquake_data)
+        Feature.create!(valid_feature_data)
 
         puts "Save Sismologic Data: Success"
       rescue StandardError => e
