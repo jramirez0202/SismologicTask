@@ -26,4 +26,32 @@ const fetchFilter = async () => {
   }
 };
 
-export default { fetchUsgsData, fetchFilter };
+const fetchFeatureComments = async (featureId) => {
+  try {
+    const url = `http://localhost:3000/api/v1/features/${featureId}/comments`;
+    const response = await axios.get(url);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching feature comments:', error);
+    return null;
+  }
+};
+
+const createFeatureComment = async (featureId, body) => {
+  try {
+    const url = `http://localhost:3000/api/v1/features/${featureId}/comments`;
+    const response = await axios.post(url, { 
+      "comment": {
+        "body": body,
+        "feature_id": featureId
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error creating feature comment:', error);
+    return null;
+  }
+};
+
+
+export default { fetchUsgsData, fetchFilter, fetchFeatureComments, createFeatureComment };

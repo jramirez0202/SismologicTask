@@ -37,7 +37,7 @@ const  Pagination = ({dataPage, currentPage, setCurrentPage, totalPage}) => {
   <div className="flex space-x-3 overflow-x-auto"> {/* Reemplaza .containerNumber__page */}
     {pageNumber.map(page => (
       <div
-        className={`border border-gray-300 rounded p-2 ${page === currentPage ? 'bg-green-600 text-white' : ''}`} 
+        className={`border border-gray-300 rounded m-2 p-2 ${page === currentPage ? 'bg-[#4ba0ac]  text-white' : ''}`} 
         onClick={() => onSpecificPage(page)}
         key={page}
       >
@@ -47,7 +47,7 @@ const  Pagination = ({dataPage, currentPage, setCurrentPage, totalPage}) => {
   </div>
   <div>
     <button
-      className={`px-3 py-2 text-xs font-medium text-center text-white rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 ${currentPage >= pageNumber.length ? 'opacity-50 cursor-not-allowed' : ''}`}
+      className={`px-3 py-2 text-xs font-medium ml-2 text-center text-white rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 ${currentPage >= pageNumber.length ? 'opacity-50 cursor-not-allowed' : ''}`}
       type="button"
       disabled={currentPage >= pageNumber.length}
       onClick={() => onNextPage()}

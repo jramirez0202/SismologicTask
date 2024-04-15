@@ -1,7 +1,6 @@
 class Api::V1::CommentsController < ApplicationController
   def create
     @feature = Feature.find_by(id: comment_params[:feature_id])
-    
     if @feature
       @comment = @feature.comments.build(comment_params.except(:feature_id))
       if @comment.save
@@ -12,6 +11,12 @@ class Api::V1::CommentsController < ApplicationController
     else
       render json: { error: "Feature not found" }, status: :not_found
     end
+  end
+
+  def index
+    @feature = Feature.find(params[:feature_id])
+    @comments = @feature.comments
+    render json: @comments
   end
 
   private
